@@ -12,3 +12,14 @@
       .bindPopup('A sample location.')
       .openPopup();
   
+      fetch('https://api.seatgeek.com/2/events?geoip=true&client_id=MzIyODkzMTZ8MTcxMDMwNDcxOS40ODQxOTE0', {
+  // method: 'GET', //GET is the default.
+  // credentials: 'same-origin', // include, *same-origin, omit
+  // redirect: 'follow', // manual, *follow, error
+})
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    console.log(data);
+  });
