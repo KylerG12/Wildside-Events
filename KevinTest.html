@@ -2,8 +2,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leaflet OpenStreetMap Example</title>
+  <title>Wildside Events</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="./assets/scripts/style.css">
   <style>
     #map { /* Make sure the map has dimensions */
       height: 400px;
@@ -12,7 +14,17 @@
   </style>
 </head>
 <body>
-  <div id="map"></div>
+  <section class="hero  is-link">
+    <div class="hero-body">
+      <p class="title">
+        Wildside Events
+      </p>
+      <p class="subtitle">
+        Find local events to express your Wildside
+      </p>
+    </div>
+  </section>
+  <div class="map" id="map"></div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="assets/scripts/index.js"></script>
