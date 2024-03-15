@@ -1,4 +1,3 @@
-fetch('https://api.seatgeek.com/2/events?geoip=true&client_id=MzIyODkzMTZ8MTcxMDMwNDcxOS40ODQxOTE0', {
 
 // Gloabl varibles
 const seatGeekClientId = "NDA0MDIwNTl8MTcxMDQ2Nzk3NS41ODgwMzE";
