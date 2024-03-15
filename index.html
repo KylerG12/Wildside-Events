@@ -2,17 +2,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Leaflet OpenStreetMap Example</title>
+  <title>Wildside Events</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <style>
     #map { /* Make sure the map has dimensions */
       height: 400px;
       width: 100%;
+      border: red 1px solid;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1 id="title"></h1> Wildside Events</h1>
+    <p id="description">
+    Find concerts, sports, and more near you!
+    <!--for sure find a better description-->  
+    </p>
+  </header>
   <div id="map"></div>
+
+  <div id="output">
+
+  </div>
+
+  <aside></aside>
+  <footer></footer>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="assets/scripts/index.js"></script>
