@@ -5,13 +5,9 @@
   <title>Wildside Events</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet" href="./assets/scripts/style.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
   <style>
-    #map { /* Make sure the map has dimensions */
-      height: 400px;
-      width: 100%;
-      border: red 1px solid;
-    }
+    
   </style>
 </head>
 <body>
@@ -25,14 +21,62 @@
       </p>
     </div>
   </section>
-  <div class="map" id="map"></div>
-
-  <div id="output">
-
+  <section class="main">
+    <div class="mapControls">
+    <select id="city" name="city">
+      <option value="Portland">Portland</option>
+      <option value="Salem">Salem</option>
+      <option value="Eugene">Eugene</option>
+      <option value="Medford">Medford</option>
+    </select>
+    <select id="state" name="state">
+      <option value="Oregon">Oregon</option>
+      <option value="Wasington">Washington</option>
+      <option value="California">California</option>
+      <option value="Nevada">Nevada</option>
+    </select>
   </div>
 
-  <aside></aside>
-  <footer></footer>
+
+  <div class="map" id="map">
+
+  </div>
+    
+  <div class="eventsContainer">
+     
+      <div class="selectedEvent">
+        <div class="imageContainer">
+          <img class="selectedImage" src="./assets/images/music-1357918_640.png" />
+        <div class="image-caption"> <a href="https://pixabay.com/illustrations/music-dance-abstract-clip-art-1357918/">Photo by ArtsyBee</a></div>
+        </div>
+        <div class="selectedDescription">
+          <p>
+            Block of super interesting text that really says nothing in so many words.
+          </p>
+        <div>
+      </div>
+      </div>
+      </div>
+      
+      <div >
+        <h3 class="eventCount">0 Events available</h3>
+      </div>
+      <div class="'eventList">
+        <ol id="eventList">
+
+        </ol>
+        
+      </div>
+      
+        
+    
+    
+  </div>
+
+  </section>
+  <footer>
+    Put event data here.
+  </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 

@@ -2,7 +2,9 @@
 
 .hero{
 width: 100%;
+min-height: 15%;
 text-align: center;
+
 }
 
 .title {
@@ -13,6 +15,7 @@ text-align: center;
     letter-spacing:1px;
     font-family:"Playfair Display", serif; 
     font-weight:400;
+    
 }
 
 .subtitle{
@@ -30,6 +33,7 @@ text-align: center;
     grid-template-rows: 27px 0;
     grid-gap: 20px;
     align-items: center;
+    
 }
  .subtitle:after, .subtitle::before{
     content: " ";
@@ -40,7 +44,54 @@ text-align: center;
   background-color:#f8f8f8;
  }
 
- .map{
-    max-width: 50%;
-    min-height: 900px;
+ 
+
+ .main {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 100%;
+    height: 80%;
  }
+
+ .mapControls{
+    position: absolute;
+    left: 100px;
+    z-index: 1000;
+ }
+
+ .mapControls select {
+    font-size: 30px
+ }
+
+ .map{
+    display: flex;
+
+    width: 50%;
+    height: 100%;
+    
+ }
+
+ .eventsContainer {
+    border: 3px red solid;
+    width: 50%;
+ }
+
+ .selectedEvent {
+    border: 3px blue solid;
+    width: 100%;
+    height: 50%;
+ }
+
+ .selectedEvent img {
+    width: 50%;
+    height: 50%;
+ }
+
+ footer {
+    height: 5%;
+    width: 100%;
+    background-color: #444;
+    color: #fff;
+    padding: 5px
+  }
