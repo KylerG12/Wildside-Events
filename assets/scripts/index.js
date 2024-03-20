@@ -1,3 +1,13 @@
+// Attribution for images to be implimented later
+//<a href="https://www.flaticon.com/free-icons/concert" title="concert icons">Concert icons created by Freepik - Flaticon</a>
+//<a href="https://www.flaticon.com/free-icons/football" title="football icons">Football icons created by Freepik - Flaticon</a>
+  
+//<a href="https://www.flaticon.com/free-icons/nba" title="nba icons">Nba icons created by amoghdesign - Flaticon</a>
+//<a href="https://www.flaticon.com/free-icons/validating-ticket" title="validating ticket icons">Validating ticket icons created by Freepik - Flaticon</a>
+
+//<a href="https://www.flaticon.com/free-icons/sport" title="sport icons">Sport icons created by mavadee - Flaticon</a>
+ //<a href="https://www.flaticon.com/free-icons/baseball" title="baseball icons">Baseball icons created by Smashicons - Flaticon</a>
+
 
 // Gloabl varibles
 const seatGeekClientId = "NDA0MDIwNTl8MTcxMDQ2Nzk3NS41ODgwMzE";
@@ -5,8 +15,7 @@ const seatGeekSecretKey = "3dd594f6f71a3122b77bd6260492f8a4c175be74026a726c05a36
 var userLocation = {
   City: "Portland, OR",
   latitude: 45.523064,
-  longitude: -122.676483,
-  eventNum: 0
+  longitude: -122.676483
 };
 var events = [];
 
@@ -39,22 +48,21 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 function updateEventList(){
-  console.log(events);
+  
 
   //Event count
   
-  $('.eventCount').text(`${userLocation.eventNum} Events available`);
-
+  $('.eventCount').text(`${events.length} Events available`);
+  
 // Clear existing items from the list
   $('#eventList').empty();
-    
+  
   if (events.length == 0){
     // No events in area
     $('#eventList').append(`<li>No Events in your area.</li>`);
   } else {
     // Iterate through events and create list
     events.forEach( event => {
-      console.log(`<li> ${event.themes.type}: ${event.themes.title}</li>`);
       $('#eventList').append(`<li> ${event.title} - ${event.type}</li>`);
     });
     
@@ -81,21 +89,42 @@ function updateMap(){
       [userLocation.latitude, userLocation.longitude],
       {icon: userIcon}
     ).addTo(map);
-  } else {
+  }
+  
+  if (events.length > 0) {
     // Create markers for each event
+
     events.forEach( event => {
+      // create custom icon for events
+      console.log(event);      
+
+      var icon = L.icon ({
+        iconSize: [60,60],
+        iconAnchor: [ 30,30 ],
+        popupAnchor: [0,0],
+        iconUrl: `./assets/images/${eventIcon(event.type)}.png`
+      });
+
       var coord = [event.venue.location.lat, event.venue.location.lon];
       
-      L.marker( coord ).addTo(map);
+      
+      var marker = L.marker( coord,
+        {icon: icon} ).addTo(map)
+        .bindTooltip(`${event.title}`, {sticky: false});
+        
+        // Show tooltip on marker hover
+      marker.on('mouseover', function(e) {
+        this.openTooltip();
+      });
+
+      // Hide tooltip when mouse leaves the marker
+      marker.on('mouseout', function(e) {
+        this.closeTooltip();
+      });
     
       // Save cooridinates
       coordinates.push(coord);
     });
-    console.log("coordinates");
-    console.log(coordinates);
-    
-    // Create LatLngBounds object
-    //var bounds = L.latLngBounds(coordinates);
 
       // Get center of LatLngBounds object
     var mapCenter = L.latLngBounds(coordinates).getCenter();
@@ -103,34 +132,16 @@ function updateMap(){
 
   
 
-  
-  
-
- 
 }
 
-/*
-async function fetchEventsByUserLocation(){
 
-  try {
-    const response = await fetch( `https://api.seatgeek.com/2/events?geoip=true&client_id=${seatGeekClientId}&client_secret=${seatGeekSecretKey}`);
-    if (!response.ok) {
-        throw new Error ("Failed to get location data");
-    }
-    const data = await response.json();
-    return data;
-  } catch (error){
-      console.log("Error fetching data");
-      throw error;
-  }
-
-  return result;
-}
-*/
 
 async function fetchEventsBySelect(city, state){
   var selector;
-  console.log(city,state);
+  const apiUrl = 'https://api.seatgeek.com/2/events';
+  const startDate = new Date();
+  const endDate = new Date();
+
   // City overides state and ip address is used if neither is supplied
   if (city ){
     selector = `venue.city=${city}`;
@@ -140,29 +151,29 @@ async function fetchEventsBySelect(city, state){
     selector = `geoip=true`;
   }
   
-  try {
-    const response = await fetch( `https://api.seatgeek.com/2/events?${selector}&client_id=${seatGeekClientId}&client_secret=${seatGeekSecretKey}`);
-    if (!response.ok) {
-        throw new Error ("Failed to get location data");
-    }
-    const data = await response.json();
+  // Clear events list
+  events = [];
+  
+  // Set to a week of events
+  endDate.setDate(endDate.getDate() + 7);
 
-    console.log(data);
-    return data;
-  } catch (error){
-      console.log("Error fetching data");
-      throw error;
-  }
+  const params = {
+    'client_id': seatGeekClientId, 
+    'client_secret' : seatGeekSecretKey,
+    'per_page': 50, 
+    'datetime_local.gte': startDate.toISOString().split('T')[0], // Start date in ISO format (YYYY-MM-DD)
+    'datetime_local.lte': endDate.toISOString().split('T')[0], // End date in ISO format (YYYY-MM-DD)
+    'page': 1 // Page number, start with 1
+  };
 
-  return result;
-}
-
-
-async function getEventBySelect(city, state){
-
-  fetchEventsBySelect(city, state)
-      .then(data => {
+  // Function to fetch events
+  async function fetchEvents() {
+    try {
+        // Fetch the first page of events
+        let response = await fetch(apiUrl + '?' + selector + "&" + new URLSearchParams(params));
+        let data = await response.json();
         
+        // save user locations
         if( data.meta.geolocation != null ){
           userLocation.City = data.meta.geolocation.display_name;
           userLocation.latitude = data.meta.geolocation.lat;
@@ -170,17 +181,42 @@ async function getEventBySelect(city, state){
           userLocation.longitude = data.meta.geolocation.lon;
          } 
 
-        userLocation.eventNum = data.meta.total;
-        events = data.events;
+        // Handle successful response
+        for (let i = 0; i < data.events.length; i++) {
+          events.push(data.events[i]);
+        }
 
-        updateMap();      
+        // Check if there are more pages of results
+        if (data.meta && data.meta.total > params.per_page * params.page) {
+            // Increment the page number and fetch the next page
+            params.page++;
+            await fetchEvents();
+        }
         updateEventList();
+        updateMap();    
+    } catch (error) {
+    }
+  }
 
-      })
-      .catch (error =>{
-        return error;
-      });
+  fetchEvents();
+}
+
+function eventIcon(type){
+  var result;
+
+  switch (type){      
+    case "concert", "nba", "soccer","nba_dleague":
+      result = type;
+      break;
+    case "nba_dleague":
+      result = "baseball";
+      break;
+    default:
+      result = "tickets";
+  }
+
+  return result;
 }
 
 // Run with null args to set user location.
-getEventBySelect(null, null);
+fetchEventsBySelect("Portland", null);
