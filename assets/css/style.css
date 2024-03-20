@@ -88,6 +88,32 @@ text-align: center;
     height: 50%;
  }
 
+ .eventCount {
+   font-size: large;
+   font-weight: bolder;
+ }
+ #eventList {
+   font-size: medium;
+   font-weight: bold;
+   padding: 10;
+   list-style-type: none;
+   color: navy;
+   background-color: ghostwhite;
+ }
+/*hiding the event details then showing them on hover over the event list item cc*/
+ .hide {
+   display:none;
+
+}
+.eventItem:hover {
+      display: block;
+      float: right;
+      background-color: aqua;
+   
+   }
+
+
+
  footer {
     height: 5%;
     width: 100%;
