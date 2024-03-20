@@ -20,13 +20,14 @@ const stateAbbreviations = [
 
 var map = L.map('map') // Create a map from leaflet library
 
-//<a target="_blank" href="https://icons8.com/icon/9vrl4rG9wDf4/person">Person</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
+// User icon comes from 
+// https://www.flaticon.com/free-icons/question, Question icons created by Freepik
 var userIcon = L.icon ({
   iconSize: [60,60],
   iconAnchor: [ 30,30 ],
   popupAnchor: [30,30],
   iconUrl: "./assets/images/question.png"
-//<a href="https://www.flaticon.com/free-icons/question" title="question icons">Question icons created by Freepik - Flaticon</a>
+
 
 });
 
@@ -41,21 +42,20 @@ function updateEventList(){
   console.log(events);
 
   //Event count
-  console.log(1);
-  $('#eventCount').text(`${userLocation.eventNum} Events available`);
-  console.log(2);
+  
+  $('.eventCount').text(`${userLocation.eventNum} Events available`);
 
 // Clear existing items from the list
   $('#eventList').empty();
     
   if (events.length == 0){
     // No events in area
-    $('#eventList').append('<li>No Events in your area, select a city</li>');
+    
   } else {
     // Iterate through events and create list
-    console.log(1);
+    
+    
     $.each(events, function(event) {
-      console.log(2);
       console.log(`<li> ${event.themes.type}: ${event.themes.title}</li>`);
       $('#eventList').append(`<li> ${event.themes.type}: ${event.themes.title}</li>`);
     });
@@ -86,6 +86,7 @@ function updateMap(){
     events.forEach( event => {
       coordinates.push([event.venue.location.lat, event.venue.location.lon]);
     });
+    console.log("coordinates");
     console.log(coordinates);
     // Create LatLngBounds object
     //var bounds = L.latLngBounds(coordinates);
@@ -124,7 +125,7 @@ async function fetchEventsByUserLocation(){
 async function fetchEventsBySelect(city, state){
   var selector;
   console.log(city,state);
-  // City overdes state and ip address is used if neither is supplied
+  // City overides state and ip address is used if neither is supplied
   if (city ){
     selector = `venue.city=${city}`;
   } else if (state) {
@@ -169,15 +170,16 @@ async function getEventBySelect(city, state){
 
         userLocation.eventNum = data.meta.total;
         events = data.events;
-console.log(44);
+
         updateMap();      
-        console.log(55);
         updateEventList();
-        console.log(66);
+
       })
       .catch (error =>{
         return error;
       });
 }
 
+
+// Run with null args to set user location.
 getEventBySelect("Portland", null);
