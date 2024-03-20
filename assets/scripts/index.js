@@ -50,15 +50,14 @@ function updateEventList(){
     
   if (events.length == 0){
     // No events in area
-    
+    $('#eventList').append(`<li>No Events in your area.</li>`);
   } else {
     // Iterate through events and create list
-    
-    
-    $.each(events, function(event) {
+    events.forEach( event => {
       console.log(`<li> ${event.themes.type}: ${event.themes.title}</li>`);
-      $('#eventList').append(`<li> ${event.themes.type}: ${event.themes.title}</li>`);
+      $('#eventList').append(`<li> ${event.title} - ${event.type}</li>`);
     });
+    
   }
 }
 
@@ -83,11 +82,18 @@ function updateMap(){
       {icon: userIcon}
     ).addTo(map);
   } else {
+    // Create markers for each event
     events.forEach( event => {
-      coordinates.push([event.venue.location.lat, event.venue.location.lon]);
+      var coord = [event.venue.location.lat, event.venue.location.lon];
+      
+      L.marker( coord ).addTo(map);
+    
+      // Save cooridinates
+      coordinates.push(coord);
     });
     console.log("coordinates");
     console.log(coordinates);
+    
     // Create LatLngBounds object
     //var bounds = L.latLngBounds(coordinates);
 
@@ -162,11 +168,7 @@ async function getEventBySelect(city, state){
           userLocation.latitude = data.meta.geolocation.lat;
           userLocation.longitude = data.meta.geolocation.lon;
           userLocation.longitude = data.meta.geolocation.lon;
-         } else {
-          userLocation.City = "";
-          userLocation.latitude = null;
-          userLocation.longitude = null;
-        }
+         } 
 
         userLocation.eventNum = data.meta.total;
         events = data.events;
@@ -180,6 +182,5 @@ async function getEventBySelect(city, state){
       });
 }
 
-
 // Run with null args to set user location.
-getEventBySelect("Portland", null);
+getEventBySelect(null, null);
