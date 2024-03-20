@@ -1,3 +1,7 @@
+//---------------------------------------------------------------------
+// TO DO
+//---------------------------------------------------------------------
+
 // Attribution for images to be implimented later
 //<a href="https://www.flaticon.com/free-icons/concert" title="concert icons">Concert icons created by Freepik - Flaticon</a>
 //<a href="https://www.flaticon.com/free-icons/football" title="football icons">Football icons created by Freepik - Flaticon</a>
@@ -7,9 +11,14 @@
 
 //<a href="https://www.flaticon.com/free-icons/sport" title="sport icons">Sport icons created by mavadee - Flaticon</a>
  //<a href="https://www.flaticon.com/free-icons/baseball" title="baseball icons">Baseball icons created by Smashicons - Flaticon</a>
+//<a href="https://www.flaticon.com/free-icons/ice-hockey" title="ice hockey icons">Ice hockey icons created by Freepik - Flaticon</a>
+//<a href="https://www.flaticon.com/free-icons/theater" title="theater icons">Theater icons created by Freepik - Flaticon</a>
 
 
+//---------------------------------------------------------------------
 // Gloabl varibles
+//---------------------------------------------------------------------
+
 const seatGeekClientId = "NDA0MDIwNTl8MTcxMDQ2Nzk3NS41ODgwMzE";
 const seatGeekSecretKey = "3dd594f6f71a3122b77bd6260492f8a4c175be74026a726c05a3642205615c1b";
 var userLocation = {
@@ -18,6 +27,8 @@ var userLocation = {
   longitude: -122.676483
 };
 var events = [];
+var eventPage = 1; // current event page counter
+const eventsPerPage = 10;
 
 const stateAbbreviations = [
   "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA",
@@ -36,8 +47,6 @@ var userIcon = L.icon ({
   iconAnchor: [ 30,30 ],
   popupAnchor: [30,30],
   iconUrl: "./assets/images/question.png"
-
-
 });
 
 
@@ -47,11 +56,12 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
+//---------------------------------------------------------------------
+// Function declarations
+//---------------------------------------------------------------------
 function updateEventList(){
   
-
   //Event count
-  
   $('.eventCount').text(`${events.length} Events available`);
   
 // Clear existing items from the list
@@ -61,9 +71,21 @@ function updateEventList(){
     // No events in area
     $('#eventList').append(`<li>No Events in your area.</li>`);
   } else {
-    // Iterate through events and create list
+    // Iterate through events and create list, per page.
+
+    var index = 0;
+    var min =  eventsPerPage * (eventPage - 1);
+    var max =  eventsPerPage * eventPage;
+
     events.forEach( event => {
-      $('#eventList').append(`<li> ${event.title} - ${event.type}</li>`);
+      if (index >= min && index <= max) {
+        var li =  $(`<li> ${event.title} - ${event.type}</li>`);
+        li.addClass(`eventItem`); 
+        li.attr('value', index);
+        $('#eventList').append(li);
+      }
+      selectEvent(min);
+      index++;
     });
     
   }
@@ -94,9 +116,10 @@ function updateMap(){
   if (events.length > 0) {
     // Create markers for each event
 
+    var index = 0;
     events.forEach( event => {
       // create custom icon for events
-      console.log(event);      
+
 
       var icon = L.icon ({
         iconSize: [60,60],
@@ -109,7 +132,9 @@ function updateMap(){
       
       
       var marker = L.marker( coord,
-        {icon: icon} ).addTo(map)
+        {
+          id: index,
+          icon: icon} ).addTo(map)
         .bindTooltip(`${event.title}`, {sticky: false});
         
         // Show tooltip on marker hover
@@ -122,18 +147,38 @@ function updateMap(){
         this.closeTooltip();
       });
     
+      marker.on('click', function (e) {
+        selectEvent(e.target.options.id);
+      });
+
       // Save cooridinates
       coordinates.push(coord);
+      index++;
     });
 
       // Get center of LatLngBounds object
     var mapCenter = L.latLngBounds(coordinates).getCenter();
   }
-
-  
-
 }
 
+// show selected event in viewer
+function selectEvent(id){
+  var event = events[id];
+
+  $('#eventTitle').text(event.title);
+  $('#eventDescription').text(event.venue.name + ", " + event.venue.address);
+
+  if (event.performers[0].image){
+    $('#eventImage').attr(`src`, event.performers[0].image);
+  } else {
+    $('#eventImage').attr(`src`, `./assets/images/music-1357918_640.png`);
+  
+  }
+  
+  map.setView([events[id].venue.location.lat, events[id].venue.location.lon], 30)
+  
+  console.log(events[id]);
+}
 
 
 async function fetchEventsBySelect(city, state){
@@ -141,6 +186,8 @@ async function fetchEventsBySelect(city, state){
   const apiUrl = 'https://api.seatgeek.com/2/events';
   const startDate = new Date();
   const endDate = new Date();
+
+  eventPage = 1; // reset page index for global event display
 
   // City overides state and ip address is used if neither is supplied
   if (city ){
@@ -161,6 +208,7 @@ async function fetchEventsBySelect(city, state){
     'client_id': seatGeekClientId, 
     'client_secret' : seatGeekSecretKey,
     'per_page': 50, 
+    'sort' : 'datetime_utc.asc',
     'datetime_local.gte': startDate.toISOString().split('T')[0], // Start date in ISO format (YYYY-MM-DD)
     'datetime_local.lte': endDate.toISOString().split('T')[0], // End date in ISO format (YYYY-MM-DD)
     'page': 1 // Page number, start with 1
@@ -181,7 +229,7 @@ async function fetchEventsBySelect(city, state){
           userLocation.longitude = data.meta.geolocation.lon;
          } 
 
-        // Handle successful response
+        // Add events to array
         for (let i = 0; i < data.events.length; i++) {
           events.push(data.events[i]);
         }
@@ -205,18 +253,57 @@ function eventIcon(type){
   var result;
 
   switch (type){      
-    case "concert", "nba", "soccer","nba_dleague":
+    case "concert":
       result = type;
       break;
-    case "nba_dleague":
+    case "soccer", "national_womens_soccer":
+      result = "soccer";
+      break;
+    case "nba_dleague", "nba":
+      result = "basketball";
+      break;
+    case "mls":
       result = "baseball";
       break;
+    case "minor_league_hockey":
+      result = "hockey";
+      break;
+    case "broadway_tickets_national", "comedy", "classical_opera":
+      result = "theater";
+      break;
+  
+      
     default:
       result = "tickets";
   }
 
   return result;
 }
+
+// Add click events to match index stored in valie of li item
+$('#eventList').on('click', function(event) {
+  // Check if the clicked element is an <li> element
+  if (event.target.tagName === 'LI') {
+    selectEvent(event.target.value);
+  }
+});
+
+// Button click events
+$('#next-button').on('click', function(event) {
+  if (eventPage < events.length / eventsPerPage ) {
+    eventPage++;
+  }
+  updateEventList();
+});
+
+$('#previous-button').on('click', function(event) {
+  eventPage--;
+  
+  if (eventPage < 1) {
+    eventPage = 1;
+  }
+  updateEventList();
+});
 
 // Run with null args to set user location.
 fetchEventsBySelect("Portland", null);
