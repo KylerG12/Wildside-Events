@@ -23,17 +23,11 @@
   </section>
   <section class="main">
     <div class="mapControls">
-    <select id="city" name="city">
-      <option value="Portland">Portland</option>
-      <option value="Salem">Salem</option>
-      <option value="Eugene">Eugene</option>
-      <option value="Medford">Medford</option>
+    <select id="cities" name="cities">
+      <option value="Cities">Cities</option>
     </select>
-    <select id="state" name="state">
-      <option value="Oregon">Oregon</option>
-      <option value="Wasington">Washington</option>
-      <option value="California">California</option>
-      <option value="Nevada">Nevada</option>
+    <select id="states" name="states">
+      <option value="States">States</option>
     </select>
   </div>
 
@@ -42,30 +36,31 @@
 
   </div>
     
-  <div class="eventsContainer">
+  <div class="infoContainer">
      
       <div class="selectedEvent">
         <div class="imageContainer">
           <img id="eventImage" class="selectedImage" src="./assets/images/music-1357918_640.png" />
-        <div class="image-caption"> <a href="https://pixabay.com/illustrations/music-dance-abstract-clip-art-1357918/">Photo by ArtsyBee</a></div>
+        <div class="imageCaption"> <a id="imageCaption" href="https://pixabay.com/illustrations/music-dance-abstract-clip-art-1357918/">Photo by ArtsyBee</a></div>
         </div>
-        <div class="selectedDescription">
+          <div class="selectedDescription">
           <!--KR: added eventTitle header-->
           <!--KR: I think we need places for event information-->
-          <h3 id="eventTitle"></h3>
-          <h5 id="eventDescription"></h3>
+          <h3 id="selectedTitle"></h3>
+          <h5 id="selectedDescription"></h3>
           <!--button to buy tickets for selected event-->
           <button type="button" id="tickets-button">Buy Tickets</button>
 
         <div>
       </div>
+        </div>
       </div>
-      </div>
-      
+    
+      <div class="listContainer">
       <div >
         <h3 class="eventCount">0 Events available</h3>
       </div>
-      <div class="'eventList">
+      <div class="'list">
         <ol id="eventList">
           <!--added list items for events-->
           <li class="eventItem">Event</li>
@@ -76,24 +71,43 @@
         
 
         <!--added buttons for previous and next itmes in the events list-->
-        <button type="prev-button" id="previous-button">&lt;Previous</button>
-        <button type="next-button" id="next-button">Next&gt;</button>
+        <button type="prev-button" id="eventPreviousButton">&lt;Previous</button>
+        <button type="next-button" id="eventNextButton">Next&gt;</button>
         
       </div>
       
+      <div >
+        <h3 class="breweryCount">0 Breweries available</h3>
+      </div>
+      <div class="listist">
+        <ol id="breweryList">
+          <!--added list items for events-->
+          <li class="breweryItem">Event</li>
+          <!--element to hide then show on hover-->
+          
+        </ol>
+        <div class="hide">brewery Details</div>
         
-    
+
+        <!--added buttons for previous and next itmes in the events list-->
+        <button type="prev-button" id="breweryPreviousButton">&lt;Previous</button>
+        <button type="next-button" id="breweryNextButton">Next&gt;</button>
+        
+      </div>
+    </div>
     
   </div>
 
   </section>
   <footer>
-    Put event data here.
+    <h3 id="location"> </h3>
   </footer>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="assets/scripts/states.js"></script>
+  <script src="assets/scripts/cities.js"></script>
   <script src="assets/scripts/index.js"></script>
 </body>
 
