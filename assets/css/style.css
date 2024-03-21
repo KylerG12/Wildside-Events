@@ -72,19 +72,31 @@ text-align: center;
     
  }
 
- .eventsContainer {
-    border: 3px red solid;
-    width: 50%;
+ .infoContainer {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: row;
+   width: 50%;
+   height: 100%;
+   border: 3px red solid;
+   width: 50%;
+}
+
+ .listContainer {
+   display: flex;
+   border: 3px green solid;
+   width: 100%;
  }
 
  .selectedEvent {
+   display: flex;
     border: 3px blue solid;
     width: 100%;
     height: 50%;
  }
 
  .selectedEvent img {
-    width: 50%;
+    width: 100%;
     height: 50%;
  }
 
@@ -112,6 +124,9 @@ text-align: center;
    
    }
 
+.list {
+   width: 50%;
+}
 
 
  footer {
