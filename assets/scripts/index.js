@@ -310,8 +310,20 @@ function selectEvent(id){
       $('#imageCaption').text(`Photo by ArtsyBee`);
     
     }
+    $('#ticketsButton').removeAttr("hidden");
+    $('#modal-image').attr('src', event.performers[0].image)
+    $('#listEventTitle').text(event.title);
+    var eventTime = dayjs(event.datetime_local);
+    $('#listEventDate').text(eventTime.format('dddd, MMMM D, h:mm A'));
+    $('#ticketAverage').text("Average cost: $" + (event.stats.average_price || "TBD")); 
+    $('#ticketLowest').text("Lowest cost: $" + (event.stats.lowest_price || "TBD"));
+    $('#modalButtonLink').attr('href',event.url);
+    console.log(event);
     var coord = [event.venue.location.lat,event.venue.location.lon];
-    map.setView(coord, 30)
+    map.setView(coord, 30);
+    
+
+
     return;
   }
   
@@ -329,6 +341,7 @@ function selectEvent(id){
       $('#eventImage').attr(`src`, `./assets/images/bar-4769520_640.jpg`);
       $('#imageCaption').attr(`href`, `https://pixabay.com/photos/bar-liquid-diet-beverage-liquid-4769520/`);
       $('#imageCaption').text(`Photo by scottalananthony`);
+      $('#ticketsButton').attr("hidden", "true");
     
     
     
@@ -581,6 +594,11 @@ $('#cities').on('change', async function(event) {
   localStorage.setItem(appName, JSON.stringify([userLocation.state, userLocation.city]))
 });
 
+$('#ticketsButton').on('click', function(event) {
+ openModal();
+});
+
+
 
 //---------------------------------------------------------------------
 // Entry Point
@@ -626,6 +644,17 @@ async function main(){
   
 
 }
+  //Modal Logic
+  var pressedX = document.getElementsByClassName("modal-close");
+  var modal = document.getElementsByClassName("modal-main");
+  function closeModal(){
+    modal[0].classList.remove('is-active');
+  }
+  function openModal(){
+    modal[0].classList.add('is-active');
+  }
+
+  pressedX[0].addEventListener("click", closeModal);
 
 main();
 
