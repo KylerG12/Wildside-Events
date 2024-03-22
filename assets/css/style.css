@@ -57,6 +57,7 @@ text-align: center;
  .mapControls{
     position: absolute;
     left: 100px;
+    
     z-index: 1000;
  }
 
