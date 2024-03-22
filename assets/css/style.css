@@ -93,18 +93,24 @@ text-align: center;
    display: flex;
     border: 3px blue solid;
     width: 100%;
-    height: 50%;
+    height: 30%;
  }
 
  .selectedEvent img {
     width: 100%;
-    height: 50%;
+    height: 90%;
  }
 
  .eventCount {
    font-size: large;
    font-weight: bolder;
  }
+
+ .breweryCount{
+   font-size: large;
+   font-weight: bolder;
+ }
+ 
  .list {
    font-size: medium;
    font-weight: bold;
@@ -112,6 +118,10 @@ text-align: center;
    list-style-type: none;
    color: navy;
    background-color: ghostwhite;
+ }
+
+ .oList{
+   list-style-type: none;
  }
 
 
@@ -163,6 +173,7 @@ text-align: center;
    position: relative;
    border-radius: 5px;
    font-size: 30px;
+   left: 30%;
   }
 
   .imgCost{
@@ -173,3 +184,30 @@ text-align: center;
    font-size: 25px;
   }
   
+#selectedTitle{
+   position: relative;
+   left: 10%;
+   font-weight: bolder;
+   font-size: 30px;
+   padding: 10px;
+   margin: 10px;
+}
+#selectedDescription{
+   position: relative;
+   left: 10%;
+   font-weight: bolder;
+   font-size: 20px;
+   padding: 10px;
+   margin: 10px;
+}
+
+#ticketsButton{
+   position: relative;
+   left: 50%;
+   border-radius: 10px;
+   font-size: 20px;
+   padding: 10px;
+   margin: 10px;
+   font-weight: bolder;
+}
+
