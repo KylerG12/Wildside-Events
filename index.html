@@ -45,15 +45,16 @@
      
       <div class="selectedEvent">
         <div class="imageContainer">
-          <img id="eventImage" class="selectedImage" src="./assets/images/music-1357918_640.png" />
-        <div class="imageCaption"> <a id="imageCaption" href="https://pixabay.com/illustrations/music-dance-abstract-clip-art-1357918/">Photo by ArtsyBee</a></div>
+          <img id="eventImage" class="selectedImage" src="./assets/images/cheers-204742_640.jpg" />
+        <div class="imageCaption"> <a id="imageCaption" href="https://pixabay.com/users/geralt-9301/">Photo by geralt`</a></div>
         </div>
           <div class="selectedDescription">
           <!--KR: added eventTitle header-->
           <!--KR: I think we need places for event information-->
           <h3 id="selectedTitle"></h3>
           <h5 id="selectedDescription"></h3>
-          <h5 id="selectedAddress"></h3>
+          <p id="selectedAddress"></p>
+          <p id="selectedCity"></p>
           <!--button to buy tickets for selected event-->
           <button type="button" id="ticketsButton" class="js-modal-trigger" data-target="modal-js-example" hidden>Get Tickets</button>
 
@@ -140,6 +141,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <asset:javascript src="leaflet.markercluster-src.js"/>
   <script src="assets/scripts/states.js"></script>
   <script src="assets/scripts/cities.js"></script>
   <script src="assets/scripts/index.js"></script>
