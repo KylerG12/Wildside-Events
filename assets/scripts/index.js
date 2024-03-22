@@ -1,4 +1,4 @@
-//TODO: add page counter on events and brewerys
+//TODO: 
 // loading page
 
 //---------------------------------------------------------------------
@@ -18,6 +18,9 @@
 //<a href="https://www.flaticon.com/free-icons/theater" title="theater icons">Theater icons created by Freepik - Flaticon</a>
 //<a href="https://www.flaticon.com/free-icons/beer" title="beer icons">Beer icons created by Freepik - Flaticon</a>
 // <a href="https://www.flaticon.com/free-icons/beer-bottle" title="beer bottle icons">Beer bottle icons created by Freepik - Flaticon</a>
+//<a href="https://www.flaticon.com/free-icons/brewery" title="brewery icons">Brewery icons created by Freepik - Flaticon</a>
+//<a href="https://www.flaticon.com/free-icons/brewery" title="brewery icons">Brewery icons created by Flat Icons - Flaticon</a>
+//<a href="https://www.flaticon.com/free-icons/brewery" title="brewery icons">Brewery icons created by wanicon - Flaticon</a>
 //scottalananthony pixabay.com https://pixabay.com/photos/bar-liquid-diet-beverage-liquid-4769520/
 
 //---------------------------------------------------------------------
@@ -113,15 +116,16 @@ function updateBreweryList(){
       selectEvent(min);
       index++;
     });
-    
-    
   }
+
+  $('#breweryPageCount').text(`Page ${breweriesPage} of ${ Math.ceil(breweries.length / breweriesPerPage)}`);
+  
 }
 
 function updateEventList(){
   
   //Event count
-  $('.eventCount').text(`${events.length} Events available in ${userLocation.city},${userLocation.state}`);
+  $('.eventCount').text(`${events.length} events available in ${userLocation.city},${userLocation.state}`);
   
 // Clear existing items from the list
   $('#eventList').empty();
@@ -152,7 +156,7 @@ function updateEventList(){
       selectEvent(min);
       index++;
     });
-    
+    $('#eventPageCount').text(`Page ${eventPage} of ${ Math.ceil(events.length / eventsPerPage)}`);
   }
 }
 
@@ -225,7 +229,7 @@ async function updateMap(){
         iconSize: [60,60],
         iconAnchor: [ 30,30 ],
         popupAnchor: [0,0],
-        iconUrl: `./assets/images/beer.png`
+        iconUrl: `./assets/images/${breweryIcon(brewery.brewery_type)}.png`
       });
 
       // Ignore items with lat lon
@@ -290,8 +294,7 @@ async function updateMap(){
 // show selected event in viewer
 function selectEvent(id){
   var item = new String(id);
-  
-  
+    
   // Set event 
   if (item.includes('event') ) {
     var event = events[item.replace('event','')];
@@ -305,9 +308,9 @@ function selectEvent(id){
       $('#imageCaption').text(event.performers[0].image_license);
       imageCaption
     } else {
-      $('#eventImage').attr(`src`, `./assets/images/music-1357918_640.png`);
-      $('#imageCaption').attr(`href`, `https://pixabay.com/illustrations/music-dance-abstract-clip-art-1357918/`);
-      $('#imageCaption').text(`Photo by ArtsyBee`);
+      $('#eventImage').attr(`src`, `./assets/images/cheers-204742_640.jpg`);
+      $('#imageCaption').attr(`href`, `https://pixabay.com/users/geralt-9301/`);
+      $('#imageCaption').text(`Photo by geralt`);
     
     }
     $('#ticketsButton').removeAttr("hidden");
@@ -319,11 +322,13 @@ function selectEvent(id){
     $('#ticketLowest').text("Lowest cost: $" + (event.stats.lowest_price || "TBD"));
     $('#modalButtonLink').attr('href',event.url);
     console.log(event);
+    
     var coord = [event.venue.location.lat,event.venue.location.lon];
+    
     map.setView(coord, 30);
     
 
-
+;
     return;
   }
   
@@ -337,13 +342,12 @@ function selectEvent(id){
     $('#selectedDescription').text(brewery.brewery_type);
 
     // TODO need image option for breweryies
+    //./assets/images/${breweryIcon(brewery.brewery_type)}.png'
+      $('#eventImage').attr(`src`, `./assets/images/${breweryIcon(brewery.brewery_type)}.png`);
+      //$('#imageCaption').attr(`href`, `https://pixabay.com/photos/bar-liquid-diet-beverage-liquid-4769520/`);
+      $('#imageCaption').text(``);
     
-      $('#eventImage').attr(`src`, `./assets/images/bar-4769520_640.jpg`);
-      $('#imageCaption').attr(`href`, `https://pixabay.com/photos/bar-liquid-diet-beverage-liquid-4769520/`);
-      $('#imageCaption').text(`Photo by scottalananthony`);
-      $('#ticketsButton').attr("hidden", "true");
-    
-    
+    $(`#ticketsButton`).attr('hidden', 'true');
     
     map.setView([brewery.latitude, brewery.longitude], 30)
     return;
@@ -503,6 +507,26 @@ function eventIcon(type){
       
     default:
       result = "tickets";
+  }
+
+  return result;
+}
+
+function breweryIcon(type){
+  var result;
+
+  switch (type){      
+    case "micro":
+      result = "beer-bottle";
+      break;
+    case "brewpub":
+      result = "barrel";
+      break;
+    case "closed":
+      result = "beer-tap";
+      break;
+    default:
+      result = "beer";
   }
 
   return result;
