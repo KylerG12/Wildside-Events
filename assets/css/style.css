@@ -1,213 +1,263 @@
 @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
 
-.hero{
-width: 100%;
-min-height: 15%;
-text-align: center;
-
+.hero {
+  width: 100%;
+  min-height: 15%;
+  text-align: center;
 }
 
 .title {
-    text-align:center; 
-    font-size:50px; 
-    text-transform:uppercase; 
-    color:#222; 
-    letter-spacing:1px;
-    font-family:"Playfair Display", serif; 
-    font-weight:400;
-    
+  text-align: center;
+  font-size: 50px;
+  text-transform: uppercase;
+  color: #222;
+  letter-spacing: 1px;
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
 }
 
-.subtitle{
-    margin-top: 5px;
-    font-size:20px; 
-    color:#444; 
-    word-spacing:1px; 
-    font-weight:normal; 
-    letter-spacing:2px;
-    text-transform: uppercase; 
-    font-family:"Raleway", sans-serif; 
-    font-weight:500;
-    display: grid;
-    grid-template-columns: 1fr max-content 1fr;
-    grid-template-rows: 27px 0;
-    grid-gap: 20px;
-    align-items: center;
-    
+.subtitle {
+  margin-top: 5px;
+  font-size: 20px;
+  color: #444;
+  word-spacing: 1px;
+  font-weight: normal;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+  display: grid;
+  grid-template-columns: 1fr max-content 1fr;
+  grid-template-rows: 27px 0;
+  grid-gap: 20px;
+  align-items: center;
 }
- .subtitle:after, .subtitle::before{
-    content: " ";
-    display: block;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
-    height: 5px;
-  background-color:#f8f8f8;
- }
-
- 
-
- .main {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    width: 100%;
-    height: 80%;
- }
-
- .mapControls{
-    position: absolute;
-    left: 100px;
-    
-    z-index: 1000;
- }
-
- .mapControls select {
-    font-size: 30px
- }
-
- .map{
-    display: flex;
-
-    width: 50%;
-    height: 100%;
-    
- }
-
- .infoContainer {
-   display: flex;
-   flex-wrap: wrap;
-   flex-direction: row;
-   width: 50%;
-   height: 100%;
-   border: 3px red solid;
-   width: 50%;
+.subtitle:after,
+.subtitle::before {
+  content: " ";
+  display: block;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  height: 5px;
+  background-color: #f8f8f8;
 }
 
- .listContainer {
-   display: flex;
-   border: 3px green solid;
-   width: 100%;
- }
-
- .selectedEvent {
-   display: flex;
-    border: 3px blue solid;
-    width: 100%;
-    height: 30%;
- }
-
- .selectedEvent img {
-    width: 100%;
-    height: 90%;
- }
-
- .eventCount {
-   font-size: large;
-   font-weight: bolder;
- }
-
- .breweryCount{
-   font-size: large;
-   font-weight: bolder;
- }
- 
- .list {
-   font-size: medium;
-   font-weight: bold;
-   padding: 10;
-   list-style-type: none;
-   color: navy;
-   background-color: ghostwhite;
- }
-
- .oList{
-   list-style-type: none;
- }
-
-
-/*hiding the event details then showing them on hover over the event list item cc*/
- .hide {
-   display:none;
-
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
+  height: 80%;
 }
-.eventItem:hover {
-      display: block;
-      background-color: aqua;
-   
-   }
 
-   .breweryItem:hover{
-      display: block;
-      background-color: aqua;
-   }
+.mapControls {
+  position: absolute;
+  left: 100px;
+
+  z-index: 1000;
+}
+
+.mapControls select {
+  font-size: 30px;
+}
+
+.map {
+  display: flex;
+
+  width: 50%;
+  height: 100%;
+}
+
+.infoContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 50%;
+  height: 100%;
+  width: 50%;
+}
+
+.listContainer {
+  display: flex;
+  width: 100%;
+}
+
+.selectedEvent {
+  display: flex;
+  width: 100%;
+  height: 30%;
+}
+
+.selectedEvent img {
+  width: 100%;
+  height: 90%;
+}
+
+.eventCount {
+  font-size: large;
+  font-weight: bolder;
+}
+
+.breweryCount {
+  font-size: large;
+  font-weight: bolder;
+}
 
 .list {
-   width: 50%;
+  font-size: medium;
+  font-weight: bold;
+  padding: 10;
+  list-style-type: none;
+  color: navy;
+  background-color: ghostwhite;
 }
 
+.oList {
+  list-style-type: none;
+}
 
- footer {
-    height: 5%;
+/*hiding the event details then showing them on hover over the event list item cc*/
+.hide {
+  display: none;
+}
+.eventItem:hover {
+  display: block;
+  background-color: aqua;
+}
+
+.breweryItem:hover {
+  display: block;
+  background-color: aqua;
+}
+
+.list {
+  width: 50%;
+}
+
+footer {
+  height: 5%;
+  width: 100%;
+  background-color: #444;
+  color: #fff;
+  padding: 5px;
+}
+
+.modal {
+  z-index: 10000;
+}
+
+.modal-content {
+  background-color: white;
+  display: flex;
+  font-weight: bolder;
+}
+.modal-content li {
+  margin: 5px;
+  padding: 5px;
+  font-size: larger;
+}
+
+.modalButton {
+  position: relative;
+  border-radius: 5px;
+  font-size: 30px;
+  left: 30%;
+}
+
+.imgCost {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.pricing {
+  font-size: 25px;
+}
+
+#selectedTitle {
+  position: relative;
+  left: 10%;
+  font-weight: bolder;
+  font-size: 30px;
+  padding: 10px;
+  margin: 10px;
+}
+#selectedDescription {
+  position: relative;
+  left: 10%;
+  font-weight: bolder;
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
+}
+
+#ticketsButton {
+  position: relative;
+  left: 50%;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 10px;
+  margin: 10px;
+  font-weight: bolder;
+}
+
+@media only screen and (max-width: 1000px) {
+  .map {
     width: 100%;
-    background-color: #444;
-    color: #fff;
-    padding: 5px
+  }
+  .oList {
+    list-style-type: disc;
+  }
+  .mapControls {
+    position: relative;
+  }
+  .subtitle {
+    display: none;
+  }
+  .title {
+    max-width: 500px;
+    text-wrap: wrap;
+  }
+  .listContainer {
+    flex-wrap: wrap;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .breweryItem {
+    width: 500px;
+  }
+  .eventItem {
+    width: 500px;
+  }
+  .infoContainer {
+    width: 100%;
+    margin-top: 10px;
+  }
+  footer {
+    display: none;
+  }
+  #selectedTitle {
+    position: relative;
+    left: 1px;
+    font-weight: bolder;
+    font-size: 15px;
+    padding: 3px;
+    margin: 3px;
+  }
+  #selectedDescription {
+    position: relative;
+    left: 1px;
+    font-weight: bolder;
+    font-size: 10px;
+    padding: 3px;
+    margin: 3px;
   }
 
-  .modal{
-   z-index: 10000;
+  #ticketsButton {
+    position: relative;
+    left: 1px;
+    border-radius: 10px;
+    font-size: 20px;
+    padding: 10px;
+    margin: 10px;
+    font-weight: bolder;
   }
-
-  .modal-content{
-   background-color: white;
-   display: flex;
-   font-weight: bolder;
-  }
-  .modal-content li{
-   margin: 5px;
-   padding: 5px;
-   font-size: larger;
-  }
-
-  .modalButton {
-   position: relative;
-   border-radius: 5px;
-   font-size: 30px;
-   left: 30%;
-  }
-
-  .imgCost{
-   display: grid;
-   grid-template-columns: 1fr 1fr;;
-  }
-  .pricing{
-   font-size: 25px;
-  }
-  
-#selectedTitle{
-   position: relative;
-   left: 10%;
-   font-weight: bolder;
-   font-size: 30px;
-   padding: 10px;
-   margin: 10px;
 }
-#selectedDescription{
-   position: relative;
-   left: 10%;
-   font-weight: bolder;
-   font-size: 20px;
-   padding: 10px;
-   margin: 10px;
-}
-
-#ticketsButton{
-   position: relative;
-   left: 50%;
-   border-radius: 10px;
-   font-size: 20px;
-   padding: 10px;
-   margin: 10px;
-   font-weight: bolder;
-}
-
