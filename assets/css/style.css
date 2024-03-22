@@ -104,7 +104,7 @@ text-align: center;
    font-size: large;
    font-weight: bolder;
  }
- #eventList {
+ .list {
    font-size: medium;
    font-weight: bold;
    padding: 10;
@@ -112,6 +112,8 @@ text-align: center;
    color: navy;
    background-color: ghostwhite;
  }
+
+
 /*hiding the event details then showing them on hover over the event list item cc*/
  .hide {
    display:none;
@@ -119,9 +121,13 @@ text-align: center;
 }
 .eventItem:hover {
       display: block;
-      float: right;
       background-color: aqua;
    
+   }
+
+   .breweryItem:hover{
+      display: block;
+      background-color: aqua;
    }
 
 .list {
@@ -136,3 +142,33 @@ text-align: center;
     color: #fff;
     padding: 5px
   }
+
+  .modal{
+   z-index: 10000;
+  }
+
+  .modal-content{
+   background-color: white;
+   display: flex;
+   font-weight: bolder;
+  }
+  .modal-content li{
+   margin: 5px;
+   padding: 5px;
+   font-size: larger;
+  }
+
+  .modalButton {
+   position: relative;
+   border-radius: 5px;
+   font-size: 30px;
+  }
+
+  .imgCost{
+   display: grid;
+   grid-template-columns: 1fr 1fr;;
+  }
+  .pricing{
+   font-size: 25px;
+  }
+  

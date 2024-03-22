@@ -6,6 +6,11 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <script
+  src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+  integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+  crossorigin="anonymous"
+></script>
   <style>
     
   </style>
@@ -49,7 +54,7 @@
           <h3 id="selectedTitle"></h3>
           <h5 id="selectedDescription"></h3>
           <!--button to buy tickets for selected event-->
-          <button type="button" id="tickets-button">Buy Tickets</button>
+          <button type="button" id="ticketsButton" class="js-modal-trigger" data-target="modal-js-example">Buy Tickets</button>
 
         <div>
       </div>
@@ -60,7 +65,7 @@
       <div >
         <h3 class="eventCount">0 Events available</h3>
       </div>
-      <div class="'list">
+      <div class="list">
         <ol id="eventList">
           <!--added list items for events-->
           <li class="eventItem">Event</li>
@@ -79,7 +84,7 @@
       <div >
         <h3 class="breweryCount">0 Breweries available</h3>
       </div>
-      <div class="listist">
+      <div class="list">
         <ol id="breweryList">
           <!--added list items for events-->
           <li class="breweryItem">Event</li>
@@ -102,6 +107,33 @@
   <footer>
     <h3 id="location"> </h3>
   </footer>
+
+  <div id="modal-js-example" class="modal modal-main">
+    <div class="modal-background"></div>
+  
+    <div class="modal-content">
+      <div class="box">
+        <div class="imgCost">
+        <img class="modal-image" id="modal-image">
+        <ul class="pricing">Pricing
+          <li id="ticketAverage"></li>
+          <li id="ticketLowest"></li>
+        </ul>
+      </div>
+        <div>
+        <ul>
+          <li class="listEventTitle"  id="listEventTitle"></li>
+          <li class="listEventDate" id="listEventDate"></li>
+          <li class="listEventPrice" id="listEventPrice"></li>
+        </ul>
+
+        <a id="modalButtonLink"><button class="modalButton" id="modalButton">Buy Tickets on Site</button></a>
+      </div>
+      </div>
+    </div>
+  
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
