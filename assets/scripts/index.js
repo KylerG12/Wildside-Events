@@ -54,15 +54,10 @@ const breweriesPerPage = 10;
 
  // Create a map from leaflet library
 var map = L.map('map')
+map.zoomControl.remove();
 var markers = [];
 
-// Add the OpenStreetMap tile layer to the map
-/*
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-*/
-
+// Add the google satalite map tile layer to the map
 L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
     maxZoom: 22,
     maxNativeZoom: 20,
@@ -158,6 +153,7 @@ function updateEventList(){
     });
     $('#eventPageCount').text(`Page ${eventPage} of ${ Math.ceil(events.length / eventsPerPage)}`);
   }
+  updateBreweryList();
 }
 
 // Update map function
@@ -299,8 +295,10 @@ function selectEvent(id){
   if (item.includes('event') ) {
     var event = events[item.replace('event','')];
     
-    $('#selectedTitle').text(event.title);
-    $('#selectedDescription').text(event.venue.name + ", " + event.venue.address);
+    $('#selectedTitle').text(`${event.title} - ${event.type}`  );
+    $('#selectedDescription').text(event.venue.name);
+    $('#selectedAddress').text(`${event.venue.address}`);
+    $('#selectedCity').text(`${event.venue.extended_address}`);
 
     if (event.performers[0].image){
       $('#eventImage').attr(`src`, event.performers[0].image);
@@ -335,12 +333,15 @@ function selectEvent(id){
   if ( item.includes('brewery')){
     
     var brewery = breweries[new Number(item.replace('brewery',''))];
-    
-    
-    
+        
     $('#selectedTitle').text(brewery.name);
     $('#selectedDescription').text(brewery.brewery_type);
 
+    
+    $('#selectedAddress').text(`${brewery.street}`);
+    $('#selectedCity').text(`${brewery.city}, ${brewery.state} ${brewery.postal_code} Phone:` + (brewery.phone || "None"));
+    
+    //$('#selectedAddress').text(event.venue.address);
     // TODO need image option for breweryies
     //./assets/images/${breweryIcon(brewery.brewery_type)}.png'
       $('#eventImage').attr(`src`, `./assets/images/${breweryIcon(brewery.brewery_type)}.png`);
