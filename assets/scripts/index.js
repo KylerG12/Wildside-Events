@@ -1,36 +1,33 @@
-//TODO:
-// loading page
 
 //---------------------------------------------------------------------
-// TODO: need to aaatribute the following icons
+// Wildside Events - index.js
+//
+// This code calls three APIs to support this project
+//
+// please note the following immage attribution used in the icons 
+//    Attribution for images to be implimented later
+//    <a href="https://www.flaticon.com/free-icons/concert" title="concert icons">Concert icons created by Freepik - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/football" title="football icons">Football icons created by Freepik - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/nba" title="nba icons">Nba icons created by amoghdesign - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/validating-ticket" title="validating ticket icons">Validating ticket icons created by Freepik - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/sport" title="sport icons">Sport icons created by mavadee - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/baseball" title="baseball icons">Baseball icons created by Smashicons - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/ice-hockey" title="ice hockey icons">Ice hockey icons created by Freepik - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/theater" title="theater icons">Theater icons created by Freepik - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/beer" title="beer icons">Beer icons created by Freepik - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/beer-bottle" title="beer bottle icons">Beer bottle icons created by Freepik - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/brewery" title="brewery icons">Brewery icons created by Freepik - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/brewery" title="brewery icons">Brewery icons created by Flat Icons - Flaticon</a>
+//    <a href="https://www.flaticon.com/free-icons/brewery" title="brewery icons">Brewery icons created by wanicon - Flaticon</a>
 //---------------------------------------------------------------------
-
-// Attribution for images to be implimented later
-//<a href="https://www.flaticon.com/free-icons/concert" title="concert icons">Concert icons created by Freepik - Flaticon</a>
-//<a href="https://www.flaticon.com/free-icons/football" title="football icons">Football icons created by Freepik - Flaticon</a>
-
-//<a href="https://www.flaticon.com/free-icons/nba" title="nba icons">Nba icons created by amoghdesign - Flaticon</a>
-//<a href="https://www.flaticon.com/free-icons/validating-ticket" title="validating ticket icons">Validating ticket icons created by Freepik - Flaticon</a>
-
-//<a href="https://www.flaticon.com/free-icons/sport" title="sport icons">Sport icons created by mavadee - Flaticon</a>
-//<a href="https://www.flaticon.com/free-icons/baseball" title="baseball icons">Baseball icons created by Smashicons - Flaticon</a>
-//<a href="https://www.flaticon.com/free-icons/ice-hockey" title="ice hockey icons">Ice hockey icons created by Freepik - Flaticon</a>
-//<a href="https://www.flaticon.com/free-icons/theater" title="theater icons">Theater icons created by Freepik - Flaticon</a>
-//<a href="https://www.flaticon.com/free-icons/beer" title="beer icons">Beer icons created by Freepik - Flaticon</a>
-// <a href="https://www.flaticon.com/free-icons/beer-bottle" title="beer bottle icons">Beer bottle icons created by Freepik - Flaticon</a>
-//<a href="https://www.flaticon.com/free-icons/brewery" title="brewery icons">Brewery icons created by Freepik - Flaticon</a>
-//<a href="https://www.flaticon.com/free-icons/brewery" title="brewery icons">Brewery icons created by Flat Icons - Flaticon</a>
-//<a href="https://www.flaticon.com/free-icons/brewery" title="brewery icons">Brewery icons created by wanicon - Flaticon</a>
-//scottalananthony pixabay.com https://pixabay.com/photos/bar-liquid-diet-beverage-liquid-4769520/
 
 //---------------------------------------------------------------------
 // Gloabl Declarations
 //---------------------------------------------------------------------
-
 const appName = "WildSideEvents";
+
 // API calls
 const locationUrl = "https://ipinfo.io/json";
-
 const seatGeekClientId = "NDA0MDIwNTl8MTcxMDQ2Nzk3NS41ODgwMzE";
 const seatGeekSecretKey =
   "3dd594f6f71a3122b77bd6260492f8a4c175be74026a726c05a3642205615c1b";
@@ -38,7 +35,7 @@ const seatgeekUrl = "https://api.seatgeek.com/2/events";
 
 const openBreweryApi = "https://api.openbrewerydb.org/breweries";
 
-//
+// Glabal varibles
 var userLocation = {
   city: "",
   state: "",
@@ -48,14 +45,13 @@ var userLocation = {
 
 var events = [];
 var eventPage = 1; // current event page counter
-const eventsPerPage = 10;
+const eventsPerPage = 7;
 var breweries = [];
 var breweriesPage = 1; // current breweries page counter
-const breweriesPerPage = 10;
+const breweriesPerPage = 7;
 
 // Create a map from leaflet library
 var map = L.map("map");
-map.zoomControl.remove();
 var markers = [];
 
 // Add the google satalite map tile layer to the map
@@ -80,7 +76,7 @@ var userIcon = L.icon({
 function updateBreweryList() {
   //Event count
   $(".breweryCount").text(
-    `${breweries.length} Breweries available in ${userLocation.city},${userLocation.state}`
+    `${breweries.length} Breweries available`
   );
 
   // Clear existing items from the list
@@ -89,9 +85,12 @@ function updateBreweryList() {
   if (breweries.length == 0) {
     // No events in area
     $("#breweryList").append(`<li>No Breweries in your area.</li>`);
+    $("#breweryListControls").hide();
+    
   } else {
     // Iterate through Breweries and create list, per page.
-
+    $("#breweryListControls").show();
+    
     var index = 0;
     var min = breweriesPerPage * (breweriesPage - 1);
     var max = breweriesPerPage * breweriesPage;
@@ -121,7 +120,7 @@ function updateBreweryList() {
 function updateEventList() {
   //Event count
   $(".eventCount").text(
-    `${events.length} events available in ${userLocation.city},${userLocation.state}`
+    `${events.length} events available`
   );
 
   // Clear existing items from the list
@@ -130,9 +129,11 @@ function updateEventList() {
   if (events.length == 0) {
     // No events in area
     $("#eventList").append(`<li>No Events in your area.</li>`);
+    $("#eventListControls").hide();
+    selectEvent(`clear`);
   } else {
     // Iterate through events and create list, per page.
-
+    $("#eventListControls").show();
     var index = 0;
     var min = eventsPerPage * (eventPage - 1);
     var max = eventsPerPage * eventPage;
@@ -267,9 +268,10 @@ async function updateMap() {
 
     map.fitBounds(bounds);
 
+    
     //Update user location to footer
     $("#location").text(
-      `Activities in ${userLocation.city}, ${userLocation.state}`
+    //  `Activities in ${userLocation.city}, ${userLocation.state}`
     );
   }
 
@@ -294,6 +296,19 @@ async function updateMap() {
 function selectEvent(id) {
   var item = new String(id);
 
+  // Clear old event data 
+  if (item == 'clear') {
+    $("#selectedTitle").text(`Looking into`);
+    $("#selectedDescription").text(userLocation.city);
+    $("#selectedAddress").text(`${userLocation.state}`);
+    $("#selectedCity").text(``);
+    $("#ticketsButton").hide();
+    
+    $("#eventImage").attr(`src`, `./assets/images/cheers-204742_640.jpg`);
+    $("#imageCaption").attr(`href`, `https://pixabay.com/users/geralt-9301/`);
+    $("#imageCaption").text(`Photo by geralt`);
+  }
+
   // Set event
   if (item.includes("event")) {
     var event = events[item.replace("event", "")];
@@ -313,7 +328,7 @@ function selectEvent(id) {
       $("#imageCaption").attr(`href`, `https://pixabay.com/users/geralt-9301/`);
       $("#imageCaption").text(`Photo by geralt`);
     }
-    $("#ticketsButton").removeAttr("hidden");
+    $("#ticketsButton").show();
     $("#modal-image").attr("src", event.performers[0].image);
     $("#listEventTitle").text(event.title);
     var eventTime = dayjs(event.datetime_local);
@@ -325,7 +340,7 @@ function selectEvent(id) {
       "Lowest cost: $" + (event.stats.lowest_price || "TBD")
     );
     $("#modalButtonLink").attr("href", event.url);
-    console.log(event);
+    
 
     var coord = [event.venue.location.lat, event.venue.location.lon];
 
@@ -346,17 +361,14 @@ function selectEvent(id) {
         (brewery.phone || "None")
     );
 
-    //$('#selectedAddress').text(event.venue.address);
-    // TODO need image option for breweryies
-    //./assets/images/${breweryIcon(brewery.brewery_type)}.png'
     $("#eventImage").attr(
       `src`,
       `./assets/images/${breweryIcon(brewery.brewery_type)}.png`
     );
-    //$('#imageCaption').attr(`href`, `https://pixabay.com/photos/bar-liquid-diet-beverage-liquid-4769520/`);
+
     $("#imageCaption").text(``);
 
-    $(`#ticketsButton`).attr("hidden", "true");
+    $(`#ticketsButton`).hide();
 
     map.setView([brewery.latitude, brewery.longitude], 30);
     return;
@@ -455,7 +467,11 @@ async function getEvents() {
       }
       updateEventList();
       updateBreweryList();
+        // select first item in list
+      $("#eventList li:first").trigger('click');
+
       updateMap();
+
     } catch (error) {}
   }
 
@@ -543,7 +559,11 @@ $("#eventNextButton").on("click", function (event) {
   if (eventPage < events.length / eventsPerPage) {
     eventPage++;
   }
+
   updateEventList();
+
+  // select first item in list
+  $("#eventList li:first").trigger('click');
 });
 
 $("#eventPreviousButton").on("click", function (event) {
@@ -552,14 +572,24 @@ $("#eventPreviousButton").on("click", function (event) {
   if (eventPage < 1) {
     eventPage = 1;
   }
+
   updateEventList();
+
+  // select first item in list
+  $("#eventList li:first").trigger('click');
+
 });
 
 $("#breweryNextButton").on("click", function (event) {
   if (breweriesPage < breweries.length / breweriesPerPage) {
     breweriesPage++;
   }
+
   updateBreweryList();
+
+  // select first item in list
+  $("#breweryList li:first").trigger('click');
+
 });
 
 $("#breweryPreviousButton").on("click", function (event) {
@@ -568,7 +598,12 @@ $("#breweryPreviousButton").on("click", function (event) {
   if (breweriesPage < 1) {
     breweriesPage = 1;
   }
+
   updateBreweryList();
+
+  // select first item in list
+  $("#breweryList li:first").trigger('click');
+
 });
 
 $("#next-button").on("click", function (event) {
@@ -636,7 +671,6 @@ async function main() {
       userLocation.city = city;
       userLocation.state = state;
     } else {
-      // TODO: needs call to tell cannot find user location in modal dialog
       console.log("Unable to determine user location.");
       return null;
     }

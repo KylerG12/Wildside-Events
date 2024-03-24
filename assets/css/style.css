@@ -47,25 +47,43 @@
   flex-wrap: wrap;
   flex-direction: row;
   width: 100%;
-  height: 80%;
+  height: 75%;
+}
+
+.mapContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 50%;
+  height: 100%;
+  padding: 20px;
 }
 
 .mapControls {
-  position: absolute;
-  left: 100px;
-
-  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: black;
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  padding: 20px 20px 10px 20px;
+  margin: 0px 0px -10px 0px;
 }
 
 .mapControls select {
+  flex: 1;
   font-size: 30px;
+  margin: 10px;
+/*  margin: 10px 10px 0px 10px; */
 }
 
 .map {
-  display: flex;
-
-  width: 50%;
+  flex: 1;
+  width: 100%;
   height: 100%;
+  margin: 10px;
+  margin: 0px 0px -10px 0px;
+  border-radius: 0 0 20px 20px;
 }
 
 .infoContainer {
@@ -74,23 +92,63 @@
   flex-direction: row;
   width: 50%;
   height: 100%;
-  width: 50%;
-}
-
-.listContainer {
-  display: flex;
-  width: 100%;
+  padding: 20px;
 }
 
 .selectedEvent {
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  background-color: black;
+  border-radius: 20px 20px 0 0;
   width: 100%;
-  height: 30%;
+  padding: 20px 20px 10px 20px;
+  margin: 10px 10px -10px 10px;
+  height: 50%;
+}
+
+.imageContainer{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 50%;
 }
 
 .selectedEvent img {
+  flex: 1;
   width: 100%;
-  height: 90%;
+  height: 100%;
+}
+
+.selectedDescription {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  flex: 1;
+  width: 50%;
+  height: 100%;
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; 
+  text-overflow: ellipsis;
+}
+
+.listContainer {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  width: 100%;
+  height: 50%;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 0 0 20px 20px;
+  background-color: lightskyblue;
+}
+
+.listSection {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  width: 50%;
 }
 
 .eventCount {
@@ -106,16 +164,32 @@
 .list {
   font-size: medium;
   font-weight: bold;
-  padding: 10;
+  padding: 10px 10px 0 10px;
+  width: 100%;
   list-style-type: none;
   color: navy;
-  background-color: ghostwhite;
+  
 }
 
-.oList {
-  list-style-type: none;
+ul {
+  list-style: none;
+  padding: 0; 
+  margin: 0 0 10px 0;
 }
 
+li {
+  white-space: nowrap; /* Prevent line breaks */
+  overflow: hidden; /* Hide overflowing content */
+  text-overflow: ellipsis; /* Show ellipsis for overflowing content */
+}
+
+.listControls {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-evenly;
+  visibility: visible;
+}
 /*hiding the event details then showing them on hover over the event list item cc*/
 .hide {
   display: none;
@@ -128,10 +202,6 @@
 .breweryItem:hover {
   display: block;
   background-color: aqua;
-}
-
-.list {
-  width: 50%;
 }
 
 footer {
@@ -173,42 +243,50 @@ footer {
 }
 
 #selectedTitle {
-  position: relative;
-  left: 10%;
   font-weight: bolder;
-  font-size: 30px;
-  padding: 10px;
+  font-size: 20px;
+  color: white;
   margin: 10px;
 }
 #selectedDescription {
-  position: relative;
-  left: 10%;
   font-weight: bolder;
-  font-size: 20px;
-  padding: 10px;
+  font-size: 15px;
+  color: white;
   margin: 10px;
 }
 
+#selectedAddress {
+  color: white;
+  margin: 0 0 0 10px;
+}
+#selectedCity {
+  color: white;
+  margin: 0 0 0 10px;
+}
+
 #ticketsButton {
-  position: relative;
-  left: 50%;
   border-radius: 10px;
   font-size: 20px;
   padding: 10px;
   margin: 10px;
+  max-width: 250px;
   font-weight: bolder;
 }
 
 @media only screen and (max-width: 1000px) {
+ 
   .map {
     width: 100%;
   }
-  .oList {
-    list-style-type: disc;
+
+  .mapContainer {
+    width: 100%;
   }
+
   .mapControls {
-    position: relative;
+    width: 100%;
   }
+
   .subtitle {
     display: none;
   }
@@ -216,24 +294,19 @@ footer {
     max-width: 500px;
     text-wrap: wrap;
   }
-  .listContainer {
-    flex-wrap: wrap;
-    white-space: nowrap;
-    overflow: hidden;
-  }
+  
   .breweryItem {
     width: 500px;
   }
+
   .eventItem {
     width: 500px;
   }
+  
   .infoContainer {
     width: 100%;
-    margin-top: 10px;
   }
-  footer {
-    display: none;
-  }
+  
   #selectedTitle {
     position: relative;
     left: 1px;
